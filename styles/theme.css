@@ -1,0 +1,26 @@
+:root {
+  --color-primary: #1e3a8a; /* Azul fuerte */
+  --color-secondary: #38bdf8; /* Azul celeste */
+  --color-accent: #facc15; /* Amarillo suave */
+  --color-bg: #f9fafb;
+  --color-text: #1e293b;
+}
+
+/* === Gradiente de fondo === */
+.bg-gradient-relax {
+  background: linear-gradient(90deg, var(--color-primary), var(--color-secondary));
+}
+
+/* === Botones personalizados === */
+.btn-relax {
+  background-color: var(--color-primary);
+  color: white;
+  padding: 0.6rem 1.2rem;
+  border-radius: 0.4rem;
+  font-weight: 500;
+  transition: background 0.3s ease;
+}
+
+.btn-relax:hover {
+  background-color: var(--color-secondary);
+}
