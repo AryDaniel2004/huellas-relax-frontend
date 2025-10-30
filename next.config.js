@@ -3,20 +3,20 @@ const nextConfig = {
   images: {
     remotePatterns: [
       {
+        protocol: "https",
+        hostname: "pet-hotel-api.onrender.com",
+        pathname: "/uploads/**",
+      },
+      {
         protocol: "http",
         hostname: "localhost",
         port: "3001",
         pathname: "/uploads/**",
       },
-      {
-        protocol: "https",
-        hostname: "pet-hotel-api.onrender.com",
-        pathname: "/uploads/**",
-      },
     ],
-    unoptimized: true, // ← necesario para static export
+    unoptimized: true, // ✅ necesario para static export
   },
-  output: "export", // ← la nueva forma en Next.js 15 para exportar sitio estático
+  output: "export", // ✅ requerido para Render (Next 15)
 };
 
 export default nextConfig;

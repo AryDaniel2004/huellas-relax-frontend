@@ -16,6 +16,10 @@ export default function PetsPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedPet, setSelectedPet] = useState<any | null>(null);
 
+  // ✅ URL base dinámica (Render o Local)
+  const apiBaseUrl =
+    process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+
   async function fetchPets() {
     try {
       const { data } = await api.get("/pets/my");
@@ -112,12 +116,13 @@ export default function PetsPage() {
             >
               {p.photo_url ? (
                 <Image
-                src={`http://localhost:3001${p.photo_url}`}  // ✅ usar URL completa
-                alt={p.name}
-                width={160}
-                height={160}
-                className="w-40 h-40 object-cover mx-auto rounded-md border border-gray-200"
-/>
+                  // ✅ Construye la URL correcta según el entorno
+                  src={`${apiBaseUrl}${p.photo_url}`}
+                  alt={p.name}
+                  width={160}
+                  height={160}
+                  className="w-40 h-40 object-cover mx-auto rounded-md border border-gray-200"
+                />
               ) : (
                 <div className="text-center text-gray-500 font-bold text-sm">
                   AGREGAR FOTO
