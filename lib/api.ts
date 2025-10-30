@@ -1,15 +1,18 @@
 import axios from "axios";
 
+// 🔹 Detecta automáticamente si está en producción o local
+const baseURL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+
 export const api = axios.create({
-  baseURL: "http://localhost:3001/v1", // 🔥 fija directamente, sin variable
-  withCredentials: false,
+  baseURL: `${baseURL}/v1`,
+  withCredentials: true, // ✅ permite cookies o tokens entre dominios
 });
 
 // ✅ Interceptor: agrega el token automáticamente a cada request
 api.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
-      // 🔹 Preferimos sessionStorage para sesiones temporales (más seguro)
       const token =
         sessionStorage.getItem("token") || localStorage.getItem("token");
 
@@ -31,13 +34,11 @@ api.interceptors.response.use(
     if (status === 401) {
       console.warn("🔒 Sesión expirada o token inválido");
 
-      // Limpiar tanto localStorage como sessionStorage
       localStorage.removeItem("token");
       sessionStorage.removeItem("token");
       localStorage.removeItem("user");
       sessionStorage.removeItem("user");
 
-      // Redirigir al login de forma segura
       if (typeof window !== "undefined") {
         window.location.href = "/login";
       }

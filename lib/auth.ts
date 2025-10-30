@@ -1,13 +1,16 @@
 import axios from "axios";
 
-// 🔹 Config base del backend (puerto 3001)
+// 🔹 Usa variable de entorno o fallback local
+const baseURL =
+  process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
+
 const api = axios.create({
-  baseURL: "http://localhost:3001/v1",
+  baseURL: `${baseURL}/v1`,
   headers: { "Content-Type": "application/json" },
 });
 
 // ========================================================
-// 🔹 LOGIN (para cualquier tipo de usuario)
+// 🔹 LOGIN
 // ========================================================
 export async function login(email: string, password: string) {
   try {
@@ -17,7 +20,6 @@ export async function login(email: string, password: string) {
       throw new Error("Respuesta inválida del servidor");
     }
 
-    // ✅ Guardar token y datos del usuario
     sessionStorage.setItem("token", data.accessToken);
     sessionStorage.setItem("user", JSON.stringify(data.user));
 
@@ -30,7 +32,7 @@ export async function login(email: string, password: string) {
 }
 
 // ========================================================
-// 🔹 REFRESH TOKEN (opcional si usas refresh tokens)
+// 🔹 REFRESH TOKEN
 // ========================================================
 export async function refreshToken() {
   try {
@@ -57,7 +59,7 @@ export function logout() {
 }
 
 // ========================================================
-// 🔹 REGISTER (nuevo cliente)
+// 🔹 REGISTER
 // ========================================================
 export async function registerUser(data: {
   full_name: string;
@@ -98,7 +100,6 @@ export async function getCurrentUser(token: string) {
       return null;
     }
 
-    // 🧠 Permitimos tanto ADMIN como CUSTOMER
     if (data.role !== "CUSTOMER" && data.role !== "ADMIN") {
       console.warn("🚫 Usuario con rol no permitido:", data.role);
       return null;
@@ -117,4 +118,3 @@ export async function getCurrentUser(token: string) {
     return null;
   }
 }
-
