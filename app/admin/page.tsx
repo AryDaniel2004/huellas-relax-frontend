@@ -29,7 +29,6 @@ export default function AdminPanelPage() {
   const [idEditar, setIdEditar] = useState("");
   const [rooms, setRooms] = useState<Room[]>([]);
 
-  // 🧠 Cargar habitaciones si selecciona "Habitación"
   useEffect(() => {
     if (tipo === "habitacion") {
       api
@@ -46,23 +45,21 @@ export default function AdminPanelPage() {
     }
   }, [tipo]);
 
-  // 🔐 Solo ADMIN puede entrar
   if (user && user.role !== "ADMIN") {
-    alert("⚠️ Solo los administradores pueden acceder a este panel.");
+    alert(" Solo los administradores pueden acceder a este panel.");
     router.replace("/");
     return null;
   }
 
-  // === Acciones ===
   const handleCrear = async (e: React.FormEvent) => {
     e.preventDefault();
     try {
       await createService({ name: nombre, price: Number(precio) });
-      alert("✅ Servicio creado correctamente.");
+      alert(" Servicio creado correctamente.");
       setNombre("");
       setPrecio("");
     } catch (err: any) {
-      alert("❌ Error al crear servicio: " + (err.response?.data?.error || err.message));
+      alert(" Error al crear servicio: " + (err.response?.data?.error || err.message));
     }
   };
 
@@ -74,11 +71,11 @@ export default function AdminPanelPage() {
         return;
       }
       await updateServicePrice(idEditar, Number(precio));
-      alert("✅ Precio del servicio actualizado correctamente.");
+      alert(" Precio del servicio actualizado correctamente.");
       setIdEditar("");
       setPrecio("");
     } catch (err: any) {
-      alert("❌ Error al actualizar: " + (err.response?.data?.error || err.message));
+      alert(" Error al actualizar: " + (err.response?.data?.error || err.message));
     }
   };
 
@@ -90,22 +87,21 @@ export default function AdminPanelPage() {
         return;
       }
       await updateRoomPrice(idEditar, Number(precio));
-      alert("✅ Precio de habitación actualizado correctamente.");
+      alert("Precio de habitación actualizado correctamente.");
       setIdEditar("");
       setPrecio("");
     } catch (err: any) {
-      alert("❌ Error al actualizar habitación: " + (err.response?.data?.error || err.message));
+      alert(" Error al actualizar habitación: " + (err.response?.data?.error || err.message));
     }
   };
 
-  // === Animación general ===
   const variants = {
     initial: { opacity: 0, y: 20 },
     animate: { opacity: 1, y: 0 },
     exit: { opacity: 0, y: -20 },
   };
 
-  // === Layout principal ===
+
   return (
     <main className="relative min-h-screen bg-gray-50 p-10 flex justify-center overflow-hidden">
       <AnimatePresence mode="wait">
@@ -274,7 +270,6 @@ export default function AdminPanelPage() {
         )}
       </AnimatePresence>
 
-      {/* 🔹 Botones laterales */}
       <div className="fixed right-4 top-1/2 transform -translate-y-1/2 flex flex-col gap-6">
         <button
           onClick={() => setActiveTab("edit")}
