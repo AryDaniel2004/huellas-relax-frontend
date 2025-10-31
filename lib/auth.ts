@@ -1,6 +1,5 @@
 import axios from "axios";
 
-// 🔹 Usa variable de entorno o fallback local
 const baseURL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
@@ -9,9 +8,7 @@ const api = axios.create({
   headers: { "Content-Type": "application/json" },
 });
 
-// ========================================================
-// 🔹 LOGIN
-// ========================================================
+
 export async function login(email: string, password: string) {
   try {
     const { data } = await api.post("/auth/login", { email, password });
@@ -23,34 +20,30 @@ export async function login(email: string, password: string) {
     sessionStorage.setItem("token", data.accessToken);
     sessionStorage.setItem("user", JSON.stringify(data.user));
 
-    console.log("✅ LOGIN:", data.user);
+    console.log(" LOGIN:", data.user);
     return data;
   } catch (err: any) {
-    console.error("❌ LOGIN ERROR:", err.response?.data || err.message);
+    console.error(" LOGIN ERROR:", err.response?.data || err.message);
     throw err;
   }
 }
 
-// ========================================================
-// 🔹 REFRESH TOKEN
-// ========================================================
+
 export async function refreshToken() {
   try {
     const { data } = await api.post("/auth/refresh");
     if (data?.accessToken) {
       localStorage.setItem("token", data.accessToken);
-      console.log("🔁 Token actualizado:", data.accessToken);
+      console.log(" Token actualizado:", data.accessToken);
     }
     return data;
   } catch (err: any) {
-    console.error("❌ REFRESH ERROR:", err.response?.data || err.message);
+    console.error(" REFRESH ERROR:", err.response?.data || err.message);
     throw err;
   }
 }
 
-// ========================================================
-// 🔹 LOGOUT
-// ========================================================
+
 export function logout() {
   sessionStorage.clear();
   localStorage.removeItem("token");
@@ -58,9 +51,7 @@ export function logout() {
   window.location.href = "/login";
 }
 
-// ========================================================
-// 🔹 REGISTER
-// ========================================================
+
 export async function registerUser(data: {
   full_name: string;
   dpi: string;
@@ -76,17 +67,15 @@ export async function registerUser(data: {
       throw new Error("Solo se pueden registrar clientes (CUSTOMER).");
     }
 
-    console.log("✅ REGISTER CUSTOMER:", res.data.user);
+    console.log(" REGISTER CUSTOMER:", res.data.user);
     return res.data;
   } catch (err: any) {
-    console.error("❌ REGISTER ERROR:", err.response?.data || err.message);
+    console.error(" REGISTER ERROR:", err.response?.data || err.message);
     throw err;
   }
 }
 
-// ========================================================
-// 🔹 ME (usuario autenticado actual)
-// ========================================================
+
 export async function getCurrentUser(token: string) {
   try {
     const { data } = await api.get("/auth/me", {
@@ -96,21 +85,21 @@ export async function getCurrentUser(token: string) {
     });
 
     if (!data?.id || !data?.role) {
-      console.warn("⚠️ Respuesta inesperada en /auth/me:", data);
+      console.warn(" Respuesta inesperada en /auth/me:", data);
       return null;
     }
 
     if (data.role !== "CUSTOMER" && data.role !== "ADMIN") {
-      console.warn("🚫 Usuario con rol no permitido:", data.role);
+      console.warn(" Usuario con rol no permitido:", data.role);
       return null;
     }
 
-    console.log("👤 Usuario autenticado:", data);
+    console.log(" Usuario autenticado:", data);
     return data;
   } catch (err: any) {
     const status = err.response?.status;
     if (status === 401 || status === 403) {
-      console.warn("🔒 Token inválido o sin permisos");
+      console.warn(" Token inválido o sin permisos");
       return null;
     }
 
