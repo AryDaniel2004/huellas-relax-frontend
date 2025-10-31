@@ -16,23 +16,20 @@ export default function LoginPage() {
     setError("");
 
     try {
-      // 🔹 Llamar al backend para autenticar
       const { user, accessToken } = await login(email, password);
 
-      // 🔹 Guardar token y usuario (ya lo hace login(), pero lo reforzamos)
       sessionStorage.setItem("token", accessToken);
       sessionStorage.setItem("user", JSON.stringify(user));
 
-      alert(`Bienvenido, ${user.full_name || "usuario"} 👋`);
+      alert(`Bienvenido, ${user.full_name || "usuario"} `);
 
-      // 🔹 Redirigir según rol
       if (user.role === "ADMIN") {
         window.location.href = "/admin";
       } else {
         window.location.href = "/dashboard";
       }
     } catch (err: any) {
-      console.error("❌ Error al iniciar sesión:", err);
+      console.error(" Error al iniciar sesión:", err);
       setError("Credenciales incorrectas o error en el servidor");
     } finally {
       setLoading(false);
@@ -41,7 +38,7 @@ export default function LoginPage() {
 
   return (
     <main className="flex justify-center items-center py-24 px-6 bg-gray-50 min-h-screen relative">
-      {/* 🏠 Botón para volver al inicio */}
+
       <a
         href="/"
         className="absolute top-8 left-8 bg-white border border-gray-300 rounded-full p-3 shadow-md hover:bg-gray-100 transition"
@@ -50,7 +47,7 @@ export default function LoginPage() {
         <AiFillHome size={26} className="text-gray-800" />
       </a>
 
-      {/* 🧾 Formulario */}
+
       <form
         onSubmit={handleLogin}
         className="bg-white shadow-lg rounded-lg p-8 w-full max-w-md"
@@ -59,7 +56,6 @@ export default function LoginPage() {
           Iniciar Sesión
         </h1>
 
-        {/* 📧 Correo */}
         <div className="mb-4">
           <label className="block mb-1 font-medium">Correo electrónico</label>
           <input
@@ -71,7 +67,7 @@ export default function LoginPage() {
           />
         </div>
 
-        {/* 🔑 Contraseña */}
+
         <div className="mb-4">
           <label className="block mb-1 font-medium">Contraseña</label>
           <input
@@ -83,14 +79,13 @@ export default function LoginPage() {
           />
         </div>
 
-        {/* ⚠️ Error */}
+
         {error && (
           <p className="text-red-500 text-sm mb-3 bg-red-50 p-2 rounded border border-red-200 text-center">
             {error}
           </p>
         )}
 
-        {/* 🔘 Botón */}
         <button
           type="submit"
           className="w-full bg-blue-600 text-white py-2 rounded-md hover:bg-blue-700 transition"
@@ -99,7 +94,6 @@ export default function LoginPage() {
           {loading ? "Ingresando..." : "Iniciar sesión"}
         </button>
 
-        {/* 🧍 Enlace a registro */}
         <div className="mt-6 text-center text-sm text-gray-600">
           ¿No tienes cuenta?{" "}
           <a
