@@ -44,22 +44,22 @@ function PaymentForm({ bookingId, onClose, onSuccess }: any) {
     setLoading(true);
 
     try {
-      console.log("📦 bookingId enviado al backend:", bookingId);
+      console.log(" bookingId enviado al backend:", bookingId);
 
       if (!bookingId || bookingId.length < 10) {
-        alert("❌ ID de reserva no válido.");
+        alert(" ID de reserva no válido.");
         setLoading(false);
         return;
       }
 
-      console.log("🔗 URL base del backend:", api.defaults.baseURL);
+      console.log(" URL base del backend:", api.defaults.baseURL);
 
-      // 🔹 Crear PaymentIntent en el backend
+
       const { data } = await api.post("/payments/intent", {
         booking_id: bookingId,
       });
 
-      console.log("✅ Respuesta del backend (intent creado):", data);
+      console.log(" Respuesta del backend (intent creado):", data);
 
       const { client_secret } = data;
       if (!client_secret) {
@@ -71,7 +71,7 @@ function PaymentForm({ bookingId, onClose, onSuccess }: any) {
         throw new Error("No se encontró el elemento de tarjeta.");
       }
 
-      // 🔹 Confirmar el pago con Stripe
+
       const { paymentIntent, error } = await stripe.confirmCardPayment(
         client_secret,
         {
@@ -80,30 +80,30 @@ function PaymentForm({ bookingId, onClose, onSuccess }: any) {
       );
 
       if (error) {
-        console.error("❌ Error de Stripe:", error);
-        alert("❌ Error al procesar el pago: " + error.message);
+        console.error(" Error de Stripe:", error);
+        alert(" Error al procesar el pago: " + error.message);
       } else if (paymentIntent && paymentIntent.status === "succeeded") {
-        alert("✅ Pago completado correctamente");
+        alert(" Pago completado correctamente");
 
-        // 🔹 Actualizar estado en la base de datos a CONFIRMED
+     
         try {
           await api.patch(`/bookings/${bookingId}/status`, {
             status: "CONFIRMED",
           });
-          console.log("✅ Estado actualizado en la BD: CONFIRMED");
+          console.log(" Estado actualizado en la BD: CONFIRMED");
         } catch (err) {
-          console.error("⚠️ Error actualizando estado en la BD:", err);
+          console.error(" Error actualizando estado en la BD:", err);
         }
 
-        // 🔹 Refrescar la vista y cerrar modal
+
         onSuccess();
         onClose();
       } else {
-        console.warn("⚠️ Estado inesperado:", paymentIntent?.status);
+        console.warn(" Estado inesperado:", paymentIntent?.status);
         alert("El pago no se completó correctamente.");
       }
     } catch (err) {
-      console.error("❌ Error procesando pago:", err);
+      console.error(" Error procesando pago:", err);
       alert("Error interno al procesar el pago. Revisa la consola.");
     } finally {
       setLoading(false);
