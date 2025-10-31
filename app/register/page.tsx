@@ -3,7 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { useAuthStore } from "@/store/useAuthStore";
-import { AiFillHome } from "react-icons/ai"; // 🏠 Ícono de inicio
+import { AiFillHome } from "react-icons/ai"; 
 
 export default function RegisterPage() {
   const router = useRouter();
@@ -30,7 +30,7 @@ export default function RegisterPage() {
 
   return (
     <main className="flex justify-center items-center py-24 px-6 bg-gray-50 min-h-screen relative">
-      {/* 🏠 Botón para volver al inicio */}
+
       <a
         href="/"
         className="absolute top-8 left-8 bg-white border border-gray-300 rounded-full p-3 shadow-md hover:bg-gray-100 transition"
@@ -135,7 +135,7 @@ export default function RegisterPage() {
           {loading ? "Registrando..." : "Registrarse"}
         </button>
 
-        {/* 🔹 Texto de redirección a login */}
+
         <p className="text-sm text-center text-gray-600 mt-3">
           ¿Ya tienes cuenta?{" "}
           <a href="/login" className="text-blue-600 font-semibold hover:underline">
