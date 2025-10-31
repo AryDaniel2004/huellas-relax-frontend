@@ -7,7 +7,7 @@ import { motion } from "framer-motion";
 
 export default function RegisterForm() {
   const router = useRouter();
-  const { registerNewUser, loading, error } = useAuthStore(); // 🔹 quitamos setAuth
+  const { registerNewUser, loading, error } = useAuthStore(); 
 
   const [form, setForm] = useState({
     full_name: "",
@@ -36,7 +36,7 @@ export default function RegisterForm() {
         router.push("/dashboard");
       }, 1500);
     } else {
-      console.error("❌ Token no encontrado después del registro");
+      console.error(" Token no encontrado después del registro");
     }
   };
 
@@ -53,7 +53,7 @@ export default function RegisterForm() {
         Crear cuenta 🐾
       </h2>
 
-      {/* 🔹 Estado de error o éxito */}
+     
       {error && (
         <p className="text-red-600 bg-red-50 border border-red-200 rounded-md text-center p-2">
           {error}
@@ -65,7 +65,7 @@ export default function RegisterForm() {
         </p>
       )}
 
-      {/* 🔹 Campos ocultos para evitar autocompletado */}
+    
       <input type="text" name="fakeusernameremembered" className="hidden" />
       <input
         type="password"
@@ -74,7 +74,7 @@ export default function RegisterForm() {
         autoComplete="new-password"
       />
 
-      {/* 🔹 Campos del formulario */}
+   
       <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
         <div className="flex flex-col space-y-1">
           <label className="text-sm font-medium text-gray-600">
@@ -165,7 +165,7 @@ export default function RegisterForm() {
         </div>
       </div>
 
-      {/* 🔹 Botón de acción */}
+  
       <button
         type="submit"
         disabled={loading}
