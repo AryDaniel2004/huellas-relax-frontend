@@ -17,7 +17,7 @@ export default function BookingsPage() {
       const { data } = await api.get("/bookings/my");
       setBookings(data || []);
     } catch (err) {
-      console.error("❌ Error al cargar reservas:", err);
+      console.error(" Error al cargar reservas:", err);
     } finally {
       setLoading(false);
     }
@@ -30,7 +30,7 @@ export default function BookingsPage() {
       setDeleteBooking(null);
       await fetchBookings();
     } catch (err) {
-      console.error("❌ Error al eliminar reserva:", err);
+      console.error(" Error al eliminar reserva:", err);
     }
   }
 
@@ -75,7 +75,6 @@ export default function BookingsPage() {
               </div>
             )}
 
-            {/* 🔹 Título y datos */}
             <h2 className="text-lg font-semibold text-primary">
               Reserva #{r.id.slice(0, 8).toUpperCase()}
             </h2>
@@ -83,7 +82,6 @@ export default function BookingsPage() {
               <strong>Fechas:</strong> {r.start_date} → {r.end_date}
             </p>
 
-            {/* 🔹 Estado visual */}
             <p>
               <strong>Estado:</strong>{" "}
               <span
@@ -95,7 +93,7 @@ export default function BookingsPage() {
                     : "text-yellow-600"
                 } font-semibold`}
               >
-                {r.status === "CONFIRMED" ? "✅ CONFIRMED" : r.status}
+                {r.status === "CONFIRMED" ? " CONFIRMED" : r.status}
               </span>
             </p>
 
@@ -109,7 +107,6 @@ export default function BookingsPage() {
           </div>
         ))}
 
-        {/* Nueva reserva */}
         <button
           onClick={() => setShowNewModal(true)}
           className="border-2 border-dashed border-gray-400 rounded-xl flex flex-col items-center justify-center w-full h-32 text-gray-600 hover:bg-gray-50 hover:border-blue-500 transition"
@@ -119,7 +116,6 @@ export default function BookingsPage() {
         </button>
       </div>
 
-      {/* Modales */}
       {showNewModal && (
         <NewBookingModal
           onClose={() => setShowNewModal(false)}
@@ -142,7 +138,7 @@ export default function BookingsPage() {
           bookingId={payingBooking.id}
           onClose={() => setPayingBooking(null)}
           onSuccess={() => {
-            // 🔹 Cambia el estado visualmente a CONFIRMED
+            
             setBookings((prev) =>
               prev.map((b) =>
                 b.id === payingBooking.id
@@ -151,7 +147,6 @@ export default function BookingsPage() {
               )
             );
 
-            // 🔹 Cierra el modal
             setPayingBooking(null);
           }}
         />
