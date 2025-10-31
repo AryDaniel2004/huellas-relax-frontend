@@ -11,15 +11,15 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
   const { checkAuth, initialized, token } = useAuthStore();
   const pathname = usePathname();
   const router = useRouter();
-  const [checking, setChecking] = useState(true); // 🔹 evita redirección prematura
+  const [checking, setChecking] = useState(true);
 
   useEffect(() => {
-  console.log("📡 useEffect ejecutado — ruta:", pathname);
+  console.log(" useEffect ejecutado — ruta:", pathname);
 
   const publicPaths = ["/", "/login", "/register"];
   const isPublic = publicPaths.includes(pathname);
 
-  // Ejecutar checkAuth al iniciar (solo una vez)
+
   if (!initialized) {
     (async () => {
       console.log("🔹 Ejecutando checkAuth() inicial");
@@ -28,13 +28,13 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     })();
   }
 
-  // ⚠️ Redirección SOLO si ya está inicializado y SIN token
+  
   if (initialized && !token && !isPublic) {
     console.log("🚪 Redirigiendo a /login (sin token y ruta privada)");
     router.replace("/login");
   }
 
-  // 🚫 Si está logueado e intenta volver a /login → a su dashboard
+
   if (initialized && token && pathname === "/login") {
     console.log("🏠 Usuario logueado en /login → redirigiendo a /admin");
     router.replace("/admin");
@@ -42,7 +42,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
 }, [pathname, initialized, token]);
 
 
-  // 🕓 Mientras verificamos sesión, no renderizar el contenido
+  
   if (checking) {
     console.log("⏳ Layout renderiza pantalla de verificación (checking=true)");
     return (
@@ -57,8 +57,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
     );
   }
 
-  // ✅ Render normal
-  console.log("🎯 Layout renderiza contenido normal (initialized=true)");
+
+  console.log(" Layout renderiza contenido normal (initialized=true)");
 
   return (
     <html lang="es">
