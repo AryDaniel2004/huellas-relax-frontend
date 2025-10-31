@@ -13,7 +13,7 @@ export default function AccountPage() {
       const { data } = await api.get("/auth/me");
       setUser(data);
     } catch (err) {
-      console.error("❌ Error obteniendo datos del usuario:", err);
+      console.error(" Error obteniendo datos del usuario:", err);
     } finally {
       setLoading(false);
     }
@@ -36,7 +36,7 @@ export default function AccountPage() {
       alert("📸 Foto actualizada correctamente");
       setUser({ ...user, photo_url: data.photo_url });
     } catch (err) {
-      alert("❌ Error al subir la foto");
+      alert(" Error al subir la foto");
       console.error(err);
     } finally {
       setUploading(false);
