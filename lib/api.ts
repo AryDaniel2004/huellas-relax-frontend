@@ -1,15 +1,14 @@
 import axios from "axios";
 
-// 🔹 Detecta automáticamente si está en producción o local
 const baseURL =
   process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
 export const api = axios.create({
   baseURL: `${baseURL}/v1`,
-  withCredentials: true, // ✅ permite cookies o tokens entre dominios
+  withCredentials: true, 
 });
 
-// ✅ Interceptor: agrega el token automáticamente a cada request
+
 api.interceptors.request.use(
   (config) => {
     if (typeof window !== "undefined") {
@@ -25,14 +24,14 @@ api.interceptors.request.use(
   (error) => Promise.reject(error)
 );
 
-// ✅ Interceptor de respuesta: maneja errores globales
+
 api.interceptors.response.use(
   (response) => response,
   (error) => {
     const status = error.response?.status;
 
     if (status === 401) {
-      console.warn("🔒 Sesión expirada o token inválido");
+      console.warn(" Sesión expirada o token inválido");
 
       localStorage.removeItem("token");
       sessionStorage.removeItem("token");
@@ -45,7 +44,7 @@ api.interceptors.response.use(
     }
 
     if (status === 403) {
-      console.warn("🚫 Acceso prohibido para este rol");
+      console.warn(" Acceso prohibido para este rol");
     }
 
     return Promise.reject(error);
