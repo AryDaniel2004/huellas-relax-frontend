@@ -16,7 +16,6 @@ export default function PetsPage() {
   const fileInputRef = useRef<HTMLInputElement>(null);
   const [selectedPet, setSelectedPet] = useState<any | null>(null);
 
-  // ✅ URL base dinámica (Render o Local)
   const apiBaseUrl =
     process.env.NEXT_PUBLIC_API_URL || "http://localhost:3001";
 
@@ -25,7 +24,7 @@ export default function PetsPage() {
       const { data } = await api.get("/pets/my");
       setPets(data || []);
     } catch (err) {
-      console.error("❌ Error al cargar mascotas:", err);
+      console.error(" Error al cargar mascotas:", err);
     } finally {
       setLoading(false);
     }
@@ -38,7 +37,7 @@ export default function PetsPage() {
       setDeletePet(null);
       fetchPets();
     } catch (err) {
-      console.error("❌ Error al eliminar mascota:", err);
+      console.error(" Error al eliminar mascota:", err);
     }
   }
 
@@ -66,7 +65,7 @@ export default function PetsPage() {
         )
       );
     } catch (err) {
-      console.error("❌ Error al subir foto:", err);
+      console.error(" Error al subir foto:", err);
     }
   };
 
@@ -93,7 +92,6 @@ export default function PetsPage() {
             key={p.id}
             className="relative bg-white shadow rounded-lg p-6 text-center border border-gray-200"
           >
-            {/* Botones Editar / Eliminar */}
             <div className="absolute top-3 right-3 flex gap-2">
               <button
                 onClick={() => setEditPet(p)}
@@ -109,14 +107,13 @@ export default function PetsPage() {
               </button>
             </div>
 
-            {/* Foto */}
             <div
               className="w-40 h-40 mx-auto mb-4 flex items-center justify-center bg-gray-100 cursor-pointer hover:bg-gray-200 transition rounded-lg overflow-hidden"
               onClick={() => handleAddPhotoClick(p)}
             >
               {p.photo_url ? (
                 <Image
-                  // ✅ Construye la URL correcta según el entorno
+  
                   src={`${apiBaseUrl}${p.photo_url}`}
                   alt={p.name}
                   width={160}
@@ -131,7 +128,7 @@ export default function PetsPage() {
               )}
             </div>
 
-            {/* Info */}
+   
             <h2 className="text-xl font-semibold mb-1 text-gray-800">
               {p.name}
             </h2>
@@ -150,7 +147,7 @@ export default function PetsPage() {
           </div>
         ))}
 
-        {/* Botón nueva mascota */}
+        
         <button
           onClick={() => setShowNewModal(true)}
           className="border-2 border-dashed border-gray-400 rounded-xl flex flex-col items-center justify-center w-64 h-40 text-gray-600 hover:bg-gray-50 hover:border-blue-500 transition"
@@ -162,7 +159,7 @@ export default function PetsPage() {
         </button>
       </div>
 
-      {/* Modales */}
+
       {showNewModal && (
         <NewPetModal
           onClose={() => setShowNewModal(false)}
@@ -186,7 +183,7 @@ export default function PetsPage() {
         />
       )}
 
-      {/* Input oculto para subir imagen */}
+      
       <input
         ref={fileInputRef}
         type="file"
