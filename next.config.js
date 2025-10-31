@@ -1,4 +1,3 @@
-/** @type {import('next').NextConfig} */
 const nextConfig = {
   images: {
     remotePatterns: [
@@ -14,9 +13,9 @@ const nextConfig = {
         pathname: "/uploads/**",
       },
     ],
-    unoptimized: true, // ✅ necesario para static export
+    unoptimized: true, 
   },
-  output: "export", // ✅ requerido para Render (Next 15)
+  output: "export", 
 };
 
 export default nextConfig;
