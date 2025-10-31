@@ -12,7 +12,7 @@ export function BookingForm() {
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     await api.post("/bookings", form);
-    alert("Reserva creada exitosamente 🐾");
+    alert("Reserva creada exitosamente ");
   };
 
   return (
