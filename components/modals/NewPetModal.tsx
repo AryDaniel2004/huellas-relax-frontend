@@ -28,7 +28,7 @@ export default function NewPetModal({ onClose, onSuccess }: NewPetModalProps) {
         breed,
         weight_kg: parseFloat(weight),
       });
-      onSuccess(); // 🔄 Recargar lista
+      onSuccess(); 
       onClose();
     } catch (err: any) {
       setError(err.response?.data?.error || "Error al crear mascota");
