@@ -13,7 +13,7 @@ export default function PaymentsPage() {
       const { data } = await api.post("/payments/intent");
       setConfirmation(`Pago confirmado con ID: ${data.paymentId || "N/A"}`);
     } catch {
-      setConfirmation("Error procesando el pago ❌");
+      setConfirmation("Error procesando el pago ");
     } finally {
       setLoading(false);
     }
