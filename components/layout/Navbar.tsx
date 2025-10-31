@@ -7,12 +7,12 @@ import { useAuthStore } from "@/store/useAuthStore";
 export default function Navbar() {
   const { user, logoutUser, token, checkAuth, initialized } = useAuthStore();
 
-  // 🔹 Verifica sesión solo una vez al montar
+
   useEffect(() => {
     if (!initialized) checkAuth();
   }, [checkAuth, initialized]);
 
-  // 🕓 Cargando sesión inicial
+ 
   if (!initialized) {
     return (
       <nav className="w-full bg-white shadow-sm py-4">
@@ -26,7 +26,6 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-white shadow-sm">
       <div className="container mx-auto flex justify-between items-center py-4 px-6">
-        {/* 🔹 Logo */}
         <Link href="/" className="flex items-center gap-2">
           <img
             src="/logo.png"
@@ -38,7 +37,7 @@ export default function Navbar() {
           </span>
         </Link>
 
-        {/* 🔹 Enlaces principales */}
+
         <div className="hidden md:flex space-x-6 text-gray-700 font-medium">
           <Link
             href="/"
@@ -80,7 +79,7 @@ export default function Navbar() {
             Mascotas
           </Link>
 
-          {/* 🔒 Solo visible si hay token */}
+  
           {token && (
             <Link
               href="/dashboard"
@@ -93,7 +92,7 @@ export default function Navbar() {
             </Link>
           )}
 
-          {/* 🧠 Solo los ADMIN verán esta pestaña */}
+  
           {user?.role === "ADMIN" && (
             <Link
               href="/admin"
@@ -107,7 +106,7 @@ export default function Navbar() {
           )}
         </div>
 
-        {/* 🔹 Botones derechos */}
+
         <div className="flex items-center space-x-3">
           {!token ? (
             <>
@@ -127,7 +126,7 @@ export default function Navbar() {
           ) : (
             <div className="flex items-center space-x-4">
               <span className="text-gray-600 font-medium">
-                👋 {user?.full_name?.split(" ")[0] || "Usuario"}
+                 {user?.full_name?.split(" ")[0] || "Usuario"}
               </span>
               <button
                 onClick={logoutUser}
