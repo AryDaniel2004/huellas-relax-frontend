@@ -11,13 +11,13 @@ export default function HomePage() {
     <main
       className="relative text-center py-20 px-6 min-h-[calc(100vh-150px)] flex items-center justify-center bg-cover bg-center"
       style={{
-        backgroundImage: "url('/assets/img/happy-dogs-room.jpg')", // 🐶 tu fondo aquí
+        backgroundImage: "url('/assets/img/happy-dogs-room.jpg')", 
       }}
     >
-      {/* 🩵 Overlay blanco translúcido */}
+ 
       <div className="absolute inset-0 bg-white/70 backdrop-blur-[1px]" />
 
-      {/* Contenido principal */}
+
       <div className="relative z-10 max-w-3xl mx-auto">
         <Image
           src="/assets/img/logo.png"
