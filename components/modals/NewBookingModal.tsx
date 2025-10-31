@@ -45,7 +45,6 @@ export default function NewBookingModal({
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
-  // 🔹 Cargar datos iniciales
   useEffect(() => {
     async function loadData() {
       try {
@@ -58,13 +57,13 @@ export default function NewBookingModal({
         setServices(servicesRes.data || []);
         setPets(petsRes.data || []);
       } catch (err) {
-        console.error("❌ Error cargando datos:", err);
+        console.error(" Error cargando datos:", err);
       }
     }
     loadData();
   }, []);
 
-  // 🔹 Cargar fechas bloqueadas cuando se elija una habitación
+
   useEffect(() => {
     async function loadAvailability() {
       if (!roomId) return;
@@ -74,7 +73,7 @@ export default function NewBookingModal({
     loadAvailability();
   }, [roomId]);
 
-  // 🔹 Verificar si una fecha está ocupada
+
   const isDateBlocked = (date: Date) => {
     return bookedRanges.some((range) => {
       const start = new Date(range.start_date);
@@ -83,7 +82,7 @@ export default function NewBookingModal({
     });
   };
 
-  // 🔹 Calcular total
+
   const selectedRoom = rooms.find((r) => r.id === roomId);
   const serviceTotal = services
     .filter((s) => selectedServices.includes(s.id))
@@ -96,7 +95,7 @@ export default function NewBookingModal({
     );
   };
 
-  // 🔹 Crear reserva
+ 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
@@ -118,14 +117,14 @@ export default function NewBookingModal({
         notes,
       };
 
-      console.log("📦 Enviando payload:", payload);
+      console.log(" Enviando payload:", payload);
       const res = await api.post("/bookings", payload);
-      console.log("✅ Reserva creada:", res.data);
+      console.log(" Reserva creada:", res.data);
 
       onSuccess();
       onClose();
     } catch (err: any) {
-      console.error("❌ Error al crear reserva:", err);
+      console.error(" Error al crear reserva:", err);
       setError(err.response?.data?.error || "Error al crear la reserva");
     } finally {
       setLoading(false);
@@ -142,7 +141,7 @@ export default function NewBookingModal({
         {error && <p className="text-red-500 text-sm mb-2">{error}</p>}
 
         <form onSubmit={handleSubmit} className="space-y-3">
-          {/* 🔹 Mascota */}
+   
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Mascota
@@ -162,7 +161,7 @@ export default function NewBookingModal({
             </select>
           </div>
 
-          {/* 🔹 Habitación */}
+     
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Habitación
@@ -182,7 +181,7 @@ export default function NewBookingModal({
             </select>
           </div>
 
-          {/* 🔹 Calendario de fechas */}
+    
           {roomId && (
             <>
               <p className="text-sm text-gray-600 mb-1">
@@ -216,7 +215,7 @@ export default function NewBookingModal({
             </>
           )}
 
-          {/* 🔹 Servicios */}
+
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Servicios adicionales
@@ -244,7 +243,7 @@ export default function NewBookingModal({
             </div>
           </div>
 
-          {/* 🔹 Notas */}
+ 
           <div>
             <label className="block text-sm font-medium text-gray-700 mb-1">
               Notas (opcional)
@@ -257,13 +256,13 @@ export default function NewBookingModal({
             />
           </div>
 
-          {/* 🔹 Total */}
+
           <p className="text-right text-gray-700 font-semibold">
             Total estimado:{" "}
             <span className="text-blue-600">Q{total.toFixed(2)}</span>
           </p>
 
-          {/* 🔹 Botones */}
+ 
           <div className="flex justify-end gap-3 pt-2">
             <button
               type="button"
